@@ -76,13 +76,14 @@ const heroWatchlist = [
 ];
 
 const heroFooterStats = [
-  { label: "EURUSD", value: "1.08540" },
-  { label: "XAUUSD", value: "2335.57" },
-  { label: "BTCUSD", value: "67821.3" },
+  { label: "Orders", value: "06" },
+  { label: "Exposure", value: "$84K" },
+  { label: "Swap", value: "Live" },
 ];
 
 const heroStatusItems = [
   { label: "Spread", value: "0.1 Pip" },
+  { label: "Margin Lv.", value: "398%" },
   { label: "Latency", value: "11 ms" },
   { label: "Session", value: "London" },
 ];
@@ -90,7 +91,7 @@ const heroStatusItems = [
 const heroPhoneStats = [
   { label: "BUY", value: "1.08540", tone: "up" },
   { label: "SELL", value: "1.08560", tone: "down" },
-  { label: "VOL", value: "3.8M", tone: "neutral" },
+  { label: "SPREAD", value: "0.1 Pip", tone: "neutral" },
 ];
 
 const advantages = [
@@ -119,21 +120,27 @@ const advantages = [
 const downloadItems = [
   {
     title: "Android",
+    kicker: "MOBILE APP",
     system: "手機 / 平板",
     subtitle: "隨時隨地掌握行情與持倉",
     icon: "android",
+    cta: "Google Play",
   },
   {
     title: "iOS",
+    kicker: "MOBILE APP",
     system: "iPhone / iPad",
     subtitle: "流暢交易體驗與一致視覺語言",
     icon: "ios",
+    cta: "App Store",
   },
   {
     title: "MetaTrader 4",
+    kicker: "DESKTOP TERMINAL",
     system: "桌面 / 專業交易",
     subtitle: "成熟終端平台，承接更完整的交易操作",
     icon: "mt4",
+    cta: "下載 MT4",
   },
 ];
 
@@ -194,37 +201,37 @@ const trustItems = [
   {
     kicker: "REGULATION",
     title: "多重監管",
-    body: "合規牌照建立品牌成熟度。",
+    body: "合規牌照建立品牌信任。",
   },
   {
     kicker: "FUNDS",
     title: "資金隔離",
-    body: "客戶資金隔離存放。",
+    body: "客戶資金分離存放。",
   },
   {
     kicker: "TRANSPARENCY",
     title: "透明交易",
-    body: "報價與成本呈現克制。",
+    body: "報價與成本呈現清楚。",
   },
   {
     kicker: "SERVICE",
     title: "7x24 支持",
-    body: "全天候支援真實交易需求。",
+    body: "全天候支援真實交易。",
   },
 ];
 
 const footerColumns = [
   {
     title: "關於我們",
-    links: ["公司介紹", "監管信息", "合作伙伴", "聯繫我們"],
+    links: ["公司介紹", "監管信息", "聯繫我們"],
   },
   {
     title: "交易產品",
-    links: ["外匯", "貴金屬", "指數", "加密貨幣"],
+    links: ["外匯", "貴金屬", "指數"],
   },
   {
     title: "交易平台",
-    links: ["MetaTrader 4", "平台下載", "學習與支持", "市場分析"],
+    links: ["MetaTrader 4", "平台下載", "市場分析"],
   },
 ];
 
@@ -318,18 +325,18 @@ watch(isMenuOpen, (value) => {
             <span class="eyebrow">MAGIC COMPASS GLOBAL MARKETS</span>
             <h1>全球市場，一站式交易體驗</h1>
             <p>
-              穩定執行、多元產品、快速開戶與專業支持，
-              呈現成熟 CFD 平台應有的市場感與終端質感。
+              穩定執行、多元市場與專業支持，
+              呈現成熟 CFD 平台應有的終端質感。
             </p>
             <div class="hero-cta">
               <a class="primary-button hero-primary" href="#bottom-cta">立即開戶</a>
               <a class="ghost-button hero-secondary" href="#platform">了解更多</a>
             </div>
             <ul class="hero-points">
-              <li>資金安全</li>
-              <li>快速執行</li>
-              <li>多元產品</li>
-              <li>專業支持</li>
+              <li>安全</li>
+              <li>執行</li>
+              <li>產品</li>
+              <li>支持</li>
             </ul>
           </div>
 
@@ -338,9 +345,16 @@ watch(isMenuOpen, (value) => {
               <div class="visual-glow"></div>
               <div class="terminal-shell">
                 <div class="terminal-topbar">
-                  <span></span>
-                  <span></span>
-                  <span></span>
+                  <div class="terminal-window-controls" aria-hidden="true">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
+                  <div class="terminal-nav" aria-hidden="true">
+                    <span class="is-active">EURUSD</span>
+                    <span>XAUUSD</span>
+                    <span>NAS100</span>
+                  </div>
                   <div class="terminal-brand">Magic Compass Terminal</div>
                 </div>
                 <div class="terminal-layout">
@@ -356,6 +370,11 @@ watch(isMenuOpen, (value) => {
                       </div>
                     </div>
                     <div class="terminal-chart">
+                      <div class="terminal-chart-callout">
+                        <small>Bid / Ask</small>
+                        <strong>1.08540 / 1.08560</strong>
+                      </div>
+                      <div class="terminal-crosshair" aria-hidden="true"></div>
                       <div class="terminal-axis">
                         <span>1.0900</span>
                         <span>1.0860</span>
@@ -366,6 +385,12 @@ watch(isMenuOpen, (value) => {
                       </div>
                       <div class="terminal-bars">
                         <span v-for="line in 9" :key="`bar-${line}`"></span>
+                      </div>
+                      <div class="terminal-xaxis">
+                        <span>08:00</span>
+                        <span>12:00</span>
+                        <span>16:00</span>
+                        <span>20:00</span>
                       </div>
                       <svg viewBox="0 0 420 180" preserveAspectRatio="none" aria-hidden="true">
                         <polyline
@@ -381,21 +406,26 @@ watch(isMenuOpen, (value) => {
                     </div>
                     <div class="terminal-panels">
                       <div class="terminal-panel">
-                        <small>Open P/L</small>
-                        <strong>+$1,284</strong>
-                      </div>
-                      <div class="terminal-panel">
                         <small>Equity</small>
                         <strong>$24,816</strong>
                       </div>
                       <div class="terminal-panel">
-                        <small>Margin</small>
-                        <strong>$6,240</strong>
+                        <small>Margin Lv.</small>
+                        <strong>398.4%</strong>
+                      </div>
+                      <div class="terminal-panel">
+                        <small>Free Margin</small>
+                        <strong>$18,570</strong>
                       </div>
                     </div>
                   </div>
                   <div class="terminal-side">
                     <div class="side-title">MARKET WATCH</div>
+                    <div class="side-head">
+                      <span>PAIR</span>
+                      <span>LAST</span>
+                      <span>CHG</span>
+                    </div>
                     <div class="side-row" v-for="item in heroWatchlist" :key="item.pair">
                       <span class="side-pair">{{ item.pair }}</span>
                       <span class="side-price">{{ item.price }}</span>
@@ -418,11 +448,19 @@ watch(isMenuOpen, (value) => {
               <div class="phone-shell">
                 <div class="phone-screen">
                   <div class="phone-notch"></div>
+                  <div class="phone-strip">
+                    <span>Real</span>
+                    <span>11 ms</span>
+                  </div>
                   <div class="phone-head">
                     <strong>EURUSD</strong>
                     <span class="positive">+0.23%</span>
                   </div>
                   <div class="phone-chart">
+                    <div class="phone-callout">
+                      <small>Spread</small>
+                      <strong>0.1 Pip</strong>
+                    </div>
                     <svg viewBox="0 0 120 220" preserveAspectRatio="none" aria-hidden="true">
                       <polyline
                         points="0,166 14,154 28,156 42,142 56,146 70,136 84,138 98,126 112,132 120,128"
@@ -514,17 +552,34 @@ watch(isMenuOpen, (value) => {
           <div class="platform-mockup">
             <div class="mockup-device mini">
               <div class="mockup-screen">
+                <div class="mockup-status">
+                  <span class="is-live">LIVE</span>
+                  <span>EURUSD</span>
+                </div>
                 <div class="mockup-line"></div>
                 <div class="mockup-line short"></div>
-                <div class="mockup-chart"></div>
+                <div class="mockup-chart">
+                  <div class="mockup-chart-pill">
+                    <small>Price</small>
+                    <strong>1.08540</strong>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="mockup-device wide">
               <div class="mockup-screen wide-screen">
-                <div class="mockup-toolbar"></div>
-                <div class="mockup-candles"></div>
+                <div class="mockup-toolbar">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+                <div class="mockup-candles">
+                  <div class="mockup-candle-line"></div>
+                </div>
                 <div class="mockup-tickers">
-                  <span v-for="item in 3" :key="`ticker-${item}`"></span>
+                  <span>EURUSD</span>
+                  <span>XAUUSD</span>
+                  <span>US30</span>
                 </div>
               </div>
             </div>
@@ -551,14 +606,17 @@ watch(isMenuOpen, (value) => {
         <div class="download-grid">
           <article v-for="item in downloadItems" :key="item.title" class="download-card">
             <div class="download-top">
-              <div class="download-icon" :class="item.icon"></div>
+              <div class="download-branding">
+                <div class="download-icon" :class="item.icon"></div>
+                <div class="download-headline">
+                  <span class="download-kicker">{{ item.kicker }}</span>
+                  <h3>{{ item.title }}</h3>
+                </div>
+              </div>
               <span class="download-system">{{ item.system }}</span>
             </div>
-            <div class="download-copy">
-              <h3>{{ item.title }}</h3>
-              <p>{{ item.subtitle }}</p>
-            </div>
-            <button type="button" class="secondary-button small">立即下載</button>
+            <p class="download-desc">{{ item.subtitle }}</p>
+            <button type="button" class="secondary-button small">{{ item.cta }}</button>
           </article>
         </div>
       </section>
@@ -600,23 +658,23 @@ watch(isMenuOpen, (value) => {
             <div class="quote-mobile-head">
               <div class="quote-mobile-symbol">
                 <strong>{{ row.name }}</strong>
-                <small>熱門產品</small>
+                <small>即時報價</small>
               </div>
               <span :class="['quote-mobile-badge', row.changeClass]">{{ row.ratio }}</span>
             </div>
-            <div class="quote-mobile-main">
-              <small>賣出價</small>
-              <strong class="up">{{ row.ask }}</strong>
-            </div>
-            <div class="quote-mobile-meta">
-              <div class="quote-mobile-mini">
+            <div class="quote-mobile-prices">
+              <div class="quote-mobile-price">
                 <small>買入價</small>
                 <strong class="down">{{ row.bid }}</strong>
               </div>
-              <div class="quote-mobile-mini">
-                <small>漲跌</small>
-                <strong :class="row.changeClass">{{ row.change }}</strong>
+              <div class="quote-mobile-price">
+                <small>賣出價</small>
+                <strong class="up">{{ row.ask }}</strong>
               </div>
+            </div>
+            <div class="quote-mobile-move">
+              <span>日內變動</span>
+              <strong :class="row.changeClass">{{ row.change }}</strong>
             </div>
           </article>
         </div>
@@ -697,8 +755,8 @@ watch(isMenuOpen, (value) => {
     </main>
 
     <footer id="footer" class="site-footer">
-      <div class="container footer-grid">
-        <div class="footer-brand">
+        <div class="container footer-grid">
+          <div class="footer-brand">
           <a class="brand footer-brand-link" href="#hero">
             <span class="brand-mark">
               <span class="brand-ring"></span>
@@ -709,9 +767,7 @@ watch(isMenuOpen, (value) => {
               <small>GSCCE 209/110</small>
             </span>
           </a>
-          <p>
-            Brand-led CFD platform homepage prototype and front-end implementation.
-          </p>
+          <p>受監管 CFD 平台首頁靜態原型與前端實作。</p>
         </div>
 
         <div v-for="section in footerColumns" :key="section.title" class="footer-links">
@@ -721,20 +777,21 @@ watch(isMenuOpen, (value) => {
 
         <form class="footer-subscribe">
           <h3>訂閱市場快訊</h3>
-          <p>獲取最新市場分析與平台更新。</p>
-          <label>
-            <span class="sr-only">Email</span>
-            <input type="email" placeholder="輸入您的電子郵箱" />
-          </label>
-          <button class="primary-button" type="submit">訂閱</button>
+          <p>接收市場分析與平台更新。</p>
+          <div class="footer-subscribe-row">
+            <label>
+              <span class="sr-only">Email</span>
+              <input type="email" placeholder="輸入您的電子郵箱" />
+            </label>
+            <button class="primary-button" type="submit">訂閱</button>
+          </div>
         </form>
       </div>
 
       <div class="container footer-risk">
         <strong>風險提示</strong>
         <p>
-          差價合約屬於高風險產品，槓桿交易可能導致快速虧損。請在充分理解風險後再進行交易，
-          並確保相關產品適合您的投資目標與風險承受能力。
+          差價合約屬高風險產品，槓桿交易可能導致快速虧損。請在充分理解風險並確認產品適合自身後再進行交易。
         </p>
       </div>
 
@@ -1045,7 +1102,7 @@ watch(isMenuOpen, (value) => {
 .hero-section {
   position: relative;
   isolation: isolate;
-  padding: 30px 0 124px;
+  padding: 30px 0 118px;
   background:
     radial-gradient(circle at 72% 24%, rgba(72, 141, 255, 0.28), transparent 22%),
     radial-gradient(circle at 86% 24%, rgba(46, 104, 209, 0.16), transparent 14%),
@@ -1178,17 +1235,17 @@ watch(isMenuOpen, (value) => {
 
 .hero-copy p {
   margin: 0;
-  max-width: 520px;
+  max-width: 498px;
   color: rgba(255, 255, 255, 0.8);
   font-size: 1rem;
-  line-height: 1.66;
+  line-height: 1.62;
 }
 
 .hero-cta {
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  margin-top: 30px;
+  margin-top: 26px;
 }
 
 .hero-primary {
@@ -1204,27 +1261,27 @@ watch(isMenuOpen, (value) => {
 .hero-points {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 18px;
+  gap: 10px 16px;
   padding: 0;
-  margin: 22px 0 0;
+  margin: 18px 0 0;
   list-style: none;
   color: rgba(255, 255, 255, 0.86);
-  font-size: 0.9rem;
+  font-size: 0.84rem;
   font-weight: 600;
 }
 
 .hero-points li {
   position: relative;
-  padding-left: 16px;
+  padding-left: 14px;
 }
 
 .hero-points li::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.56em;
-  width: 7px;
-  height: 7px;
+  top: 0.58em;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: linear-gradient(180deg, #ffd37d, #d59729);
   box-shadow: 0 0 12px rgba(217, 164, 65, 0.34);
@@ -1238,19 +1295,20 @@ watch(isMenuOpen, (value) => {
 .device-cluster {
   position: relative;
   width: min(100%, 720px);
-  min-height: 470px;
+  min-height: 452px;
 }
 
 .visual-glow {
   position: absolute;
-  right: 10%;
-  top: 14%;
-  width: 62%;
+  right: 14%;
+  top: 16%;
+  width: 56%;
   aspect-ratio: 1;
   border-radius: 50%;
   background:
     radial-gradient(circle, rgba(92, 156, 255, 0.3) 0%, rgba(13, 46, 104, 0) 64%);
-  filter: blur(4px);
+  opacity: 0.68;
+  filter: blur(8px);
 }
 
 .terminal-shell,
@@ -1269,8 +1327,8 @@ watch(isMenuOpen, (value) => {
 .terminal-shell {
   right: 0;
   top: 18px;
-  width: min(86%, 580px);
-  padding: 18px 18px 14px;
+  width: min(84%, 568px);
+  padding: 16px 16px 12px;
 }
 
 .phone-shell {
@@ -1284,23 +1342,53 @@ watch(isMenuOpen, (value) => {
 .terminal-topbar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 12px;
+  margin-bottom: 10px;
 }
 
-.terminal-topbar span {
+.terminal-window-controls {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.terminal-window-controls span {
   width: 12px;
   height: 12px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.18);
 }
 
+.terminal-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.terminal-nav span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.terminal-nav span.is-active {
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+}
+
 .terminal-brand {
-  margin-left: auto;
   color: rgba(255, 255, 255, 0.54);
   font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.08em;
+  white-space: nowrap;
 }
 
 .terminal-layout {
@@ -1321,7 +1409,7 @@ watch(isMenuOpen, (value) => {
 }
 
 .terminal-main {
-  padding: 14px;
+  padding: 13px;
 }
 
 .terminal-chart-head {
@@ -1356,42 +1444,99 @@ watch(isMenuOpen, (value) => {
 .terminal-chart-meta span {
   display: inline-flex;
   align-items: center;
-  min-height: 28px;
-  padding: 0 10px;
+  min-height: 26px;
+  padding: 0 9px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.07);
   color: rgba(255, 255, 255, 0.86);
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   font-weight: 700;
 }
 
 .terminal-chart {
   position: relative;
   overflow: hidden;
-  height: 208px;
-  margin-top: 12px;
+  height: 214px;
+  margin-top: 10px;
   border-radius: 18px;
-  background: linear-gradient(180deg, rgba(15, 40, 87, 0.95), rgba(8, 24, 52, 0.96));
+  border: 1px solid rgba(104, 149, 228, 0.18);
+  background: linear-gradient(180deg, rgba(12, 32, 71, 0.98), rgba(6, 18, 40, 0.98));
+}
+
+.terminal-chart::before {
+  content: "";
+  position: absolute;
+  inset: 16px 18px 28px;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px) 0 0 / 56px 100%;
+  opacity: 0.68;
 }
 
 .terminal-chart::after {
   content: "";
   position: absolute;
-  inset: 18px 22px auto auto;
-  width: 116px;
-  height: 64px;
+  inset: 16px 18px auto auto;
+  width: 112px;
+  height: 56px;
   border-radius: 14px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.01));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.terminal-chart-callout {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  z-index: 2;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(7, 19, 43, 0.74);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+}
+
+.terminal-chart-callout small {
+  display: block;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.terminal-chart-callout strong {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.72rem;
+}
+
+.terminal-crosshair {
+  position: absolute;
+  left: 57%;
+  top: 16px;
+  bottom: 42px;
+  z-index: 1;
+  width: 1px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.03));
+}
+
+.terminal-crosshair::after {
+  content: "";
+  position: absolute;
+  left: -118px;
+  right: -82px;
+  top: 44%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .terminal-axis {
   position: absolute;
-  right: 14px;
+  right: 12px;
   top: 16px;
-  bottom: 18px;
+  bottom: 42px;
   z-index: 1;
   display: grid;
   align-content: space-between;
@@ -1404,9 +1549,9 @@ watch(isMenuOpen, (value) => {
 
 .terminal-grid {
   position: absolute;
-  inset: 16px 16px 20px;
+  inset: 16px 16px 34px;
   display: grid;
-  gap: 18px;
+  gap: 16px;
 }
 
 .terminal-grid span {
@@ -1415,11 +1560,11 @@ watch(isMenuOpen, (value) => {
 
 .terminal-bars {
   position: absolute;
-  inset: 30px 12px 24px auto;
+  inset: 36px 14px 40px auto;
   display: flex;
   align-items: end;
-  gap: 8px;
-  opacity: 0.45;
+  gap: 7px;
+  opacity: 0.34;
 }
 
 .terminal-bars span {
@@ -1474,27 +1619,41 @@ watch(isMenuOpen, (value) => {
 .terminal-chart polyline {
   fill: none;
   stroke: #28d591;
-  stroke-width: 3;
+  stroke-width: 2.8;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 12px rgba(40, 213, 145, 0.28));
+  filter: drop-shadow(0 0 8px rgba(40, 213, 145, 0.18));
+}
+
+.terminal-xaxis {
+  position: absolute;
+  left: 16px;
+  right: 92px;
+  bottom: 42px;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.36);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .terminal-statusbar {
   position: absolute;
-  left: 14px;
-  right: 92px;
-  bottom: 12px;
+  left: 12px;
+  right: 14px;
+  bottom: 10px;
   z-index: 1;
   display: flex;
-  gap: 8px;
+  gap: 6px;
 }
 
 .status-chip {
-  min-width: 88px;
-  padding: 8px 10px;
-  border-radius: 12px;
-  background: rgba(3, 13, 34, 0.52);
+  min-width: 82px;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: rgba(3, 13, 34, 0.62);
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(8px);
 }
@@ -1518,14 +1677,15 @@ watch(isMenuOpen, (value) => {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 
 .terminal-panel {
-  min-height: 54px;
-  padding: 10px 12px;
+  min-height: 50px;
+  padding: 9px 12px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .terminal-panel small {
@@ -1544,7 +1704,7 @@ watch(isMenuOpen, (value) => {
 }
 
 .terminal-side {
-  padding: 14px 12px;
+  padding: 12px 11px;
 }
 
 .side-title {
@@ -1554,46 +1714,61 @@ watch(isMenuOpen, (value) => {
   letter-spacing: 0.16em;
 }
 
-.side-row {
+.side-head {
   display: grid;
   grid-template-columns: 1fr auto auto;
   gap: 8px;
+  margin: 10px 0 2px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.side-head span {
+  color: rgba(255, 255, 255, 0.36);
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.side-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 6px;
   align-items: center;
-  margin-top: 12px;
-  padding-bottom: 8px;
+  min-height: 36px;
+  padding: 8px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .side-row:last-of-type {
   border-bottom: 0;
-  padding-bottom: 0;
 }
 
 .side-pair {
   color: rgba(255, 255, 255, 0.86);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;
 }
 
 .side-price {
   color: rgba(255, 255, 255, 0.62);
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   font-weight: 700;
 }
 
 .side-delta {
   min-width: 46px;
   text-align: right;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
 }
 
 .side-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 18px;
+  gap: 8px;
+  margin-top: 14px;
 }
 
 .side-actions button {
@@ -1615,14 +1790,15 @@ watch(isMenuOpen, (value) => {
 .terminal-footer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  margin-top: 12px;
+  gap: 8px;
+  margin-top: 10px;
 }
 
 .footer-chip {
-  padding: 12px 14px;
+  padding: 10px 12px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .footer-chip small {
@@ -1640,16 +1816,36 @@ watch(isMenuOpen, (value) => {
 }
 
 .phone-screen {
-  min-height: 252px;
-  padding: 12px;
+  min-height: 238px;
+  padding: 10px;
 }
 
 .phone-notch {
   width: 40px;
   height: 8px;
-  margin: 0 auto 12px;
+  margin: 0 auto 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.12);
+}
+
+.phone-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.phone-strip span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
 .phone-head {
@@ -1672,6 +1868,32 @@ watch(isMenuOpen, (value) => {
   overflow: hidden;
   border-radius: 16px;
   background: linear-gradient(180deg, rgba(15, 40, 87, 0.95), rgba(8, 24, 52, 0.96));
+}
+
+.phone-callout {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  padding: 6px 8px;
+  border-radius: 10px;
+  background: rgba(5, 17, 38, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.phone-callout small {
+  display: block;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.phone-callout strong {
+  display: block;
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.58rem;
 }
 
 .phone-chart::before {
@@ -1697,6 +1919,7 @@ watch(isMenuOpen, (value) => {
   stroke-width: 3;
   stroke-linecap: round;
   stroke-linejoin: round;
+  filter: drop-shadow(0 0 8px rgba(40, 213, 145, 0.18));
 }
 
 .phone-rows {
@@ -1710,6 +1933,7 @@ watch(isMenuOpen, (value) => {
   padding: 9px 7px 8px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .phone-row-card small {
@@ -1741,12 +1965,12 @@ watch(isMenuOpen, (value) => {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 0;
-  margin-top: -58px;
-  padding: 10px 18px;
+  margin-top: -52px;
+  padding: 8px 16px;
   border: 1px solid rgba(15, 23, 42, 0.05);
   border-radius: 24px;
   background: rgba(255, 255, 255, 0.97);
-  box-shadow: 0 24px 54px rgba(7, 22, 50, 0.12);
+  box-shadow: 0 20px 44px rgba(7, 22, 50, 0.1);
 }
 
 .stat-item {
@@ -1859,24 +2083,26 @@ watch(isMenuOpen, (value) => {
 .market-tabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 18px;
 }
 
 .market-tabs button {
-  min-height: 38px;
-  padding: 0 16px;
+  min-height: 40px;
+  padding: 0 18px;
   border-radius: 999px;
-  border: 1px solid transparent;
-  background: rgba(44, 99, 211, 0.08);
-  color: var(--text-soft);
+  border: 1px solid rgba(44, 99, 211, 0.08);
+  background: rgba(244, 248, 255, 0.88);
+  color: rgba(42, 56, 78, 0.74);
   font-weight: 700;
 }
 
 .market-tabs button.is-active {
   border-color: rgba(44, 99, 211, 0.14);
   background: linear-gradient(180deg, #346bdd, #214ca8);
-  box-shadow: 0 10px 22px rgba(44, 99, 211, 0.18);
+  box-shadow:
+    0 12px 24px rgba(44, 99, 211, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
   color: #fff;
 }
 
@@ -1904,7 +2130,7 @@ watch(isMenuOpen, (value) => {
 }
 
 .market-card {
-  padding: 16px 16px 14px;
+  padding: 16px 16px 12px;
 }
 
 .market-card-head {
@@ -1912,40 +2138,52 @@ watch(isMenuOpen, (value) => {
   justify-content: space-between;
   align-items: start;
   gap: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .market-copy small {
   display: block;
   color: var(--text-soft);
-  font-size: 0.74rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.08em;
+  opacity: 0.72;
 }
 
 .market-card strong {
   display: block;
-  margin-top: 5px;
-  font-size: 1rem;
+  margin-top: 2px;
+  font-size: 0.96rem;
 }
 
 .market-price {
   display: block;
-  margin-top: 6px;
-  color: var(--text-soft);
-  font-size: 1.12rem;
+  margin-top: 8px;
+  color: var(--text);
+  font-size: 1.24rem;
   font-weight: 700;
 }
 
 .market-change {
   display: inline-flex;
   align-items: center;
-  min-height: 32px;
-  padding: 0 12px;
+  min-height: 30px;
+  padding: 0 10px;
   border-radius: 999px;
-  background: rgba(44, 99, 211, 0.08);
-  font-size: 0.84rem;
+  border: 1px solid rgba(44, 99, 211, 0.08);
+  background: rgba(44, 99, 211, 0.06);
+  font-size: 0.78rem;
   font-weight: 700;
+}
+
+.market-change.positive {
+  background: rgba(40, 213, 145, 0.08);
+  border-color: rgba(40, 213, 145, 0.12);
+}
+
+.market-change.negative {
+  background: rgba(239, 110, 100, 0.08);
+  border-color: rgba(239, 110, 100, 0.12);
 }
 
 .positive {
@@ -1957,7 +2195,8 @@ watch(isMenuOpen, (value) => {
 }
 
 .sparkline {
-  height: 54px;
+  height: 46px;
+  opacity: 0.72;
 }
 
 .sparkline polyline {
@@ -2076,8 +2315,25 @@ watch(isMenuOpen, (value) => {
   min-height: 216px;
 }
 
-.mockup-line,
-.mockup-toolbar {
+.mockup-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.mockup-status .is-live {
+  color: #28d591;
+}
+
+.mockup-line {
   height: 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
@@ -2107,7 +2363,46 @@ watch(isMenuOpen, (value) => {
   background-size: 100% 20px, 24px 100%;
 }
 
+.mockup-chart-pill {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 1;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(6, 18, 40, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.mockup-chart-pill small {
+  display: block;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.mockup-chart-pill strong {
+  display: block;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.7rem;
+}
+
+.mockup-toolbar {
+  display: flex;
+  gap: 8px;
+}
+
+.mockup-toolbar span {
+  height: 10px;
+  flex: 1;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .mockup-candles {
+  position: relative;
   height: 154px;
   margin-top: 14px;
   border-radius: 16px;
@@ -2118,6 +2413,26 @@ watch(isMenuOpen, (value) => {
   background-size: 100% 24px, 26px 100%, auto;
 }
 
+.mockup-candle-line {
+  position: absolute;
+  inset: 20px 16px 28px;
+  border-radius: 12px;
+  background:
+    linear-gradient(transparent calc(100% - 2px), rgba(255, 255, 255, 0.06) 0),
+    linear-gradient(90deg, transparent calc(100% - 2px), rgba(255, 255, 255, 0.06) 0);
+  background-size: 100% 26px, 28px 100%;
+}
+
+.mockup-candle-line::after {
+  content: "";
+  position: absolute;
+  inset: 20% 8% 18% 8%;
+  background:
+    linear-gradient(145deg, transparent 0 8%, rgba(40, 213, 145, 0.78) 8% 10%, transparent 10% 18%, rgba(40, 213, 145, 0.78) 18% 20%, transparent 20% 28%, rgba(40, 213, 145, 0.78) 28% 30%, transparent 30% 38%, rgba(40, 213, 145, 0.78) 38% 40%, transparent 40% 48%, rgba(40, 213, 145, 0.78) 48% 50%, transparent 50% 58%, rgba(40, 213, 145, 0.78) 58% 60%, transparent 60% 68%, rgba(40, 213, 145, 0.78) 68% 70%, transparent 70%);
+  filter: drop-shadow(0 0 8px rgba(40, 213, 145, 0.16));
+  clip-path: polygon(0 76%, 10% 60%, 18% 64%, 28% 46%, 36% 54%, 46% 34%, 56% 42%, 68% 22%, 78% 30%, 88% 14%, 100% 22%, 100% 100%, 0 100%);
+}
+
 .mockup-tickers {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -2126,9 +2441,16 @@ watch(isMenuOpen, (value) => {
 }
 
 .mockup-tickers span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   height: 30px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.09);
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .advantage-grid {
@@ -2219,21 +2541,40 @@ watch(isMenuOpen, (value) => {
 .download-card {
   display: grid;
   align-content: start;
-  gap: 14px;
+  gap: 12px;
   padding: 20px;
 }
 
 .download-top {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   gap: 12px;
+}
+
+.download-branding {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.download-headline {
+  display: grid;
+  gap: 4px;
+}
+
+.download-kicker {
+  color: rgba(44, 99, 211, 0.7);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
 }
 
 .download-system {
   display: inline-flex;
   align-items: center;
-  min-height: 28px;
+  min-height: 26px;
   padding: 0 12px;
   border-radius: 999px;
   background: rgba(44, 99, 211, 0.08);
@@ -2242,8 +2583,17 @@ watch(isMenuOpen, (value) => {
   font-weight: 700;
 }
 
-.download-copy h3 {
-  margin-bottom: 6px;
+.download-headline h3 {
+  margin: 0;
+}
+
+.download-desc {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.download-card .secondary-button.small {
+  min-width: 126px;
 }
 
 .download-icon {
@@ -2373,7 +2723,7 @@ watch(isMenuOpen, (value) => {
 }
 
 .quote-mobile-card {
-  padding: 18px;
+  padding: 16px;
   border: 1px solid rgba(15, 23, 42, 0.06);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.94);
@@ -2389,72 +2739,81 @@ watch(isMenuOpen, (value) => {
 
 .quote-mobile-symbol small {
   display: block;
-  margin-top: 4px;
+  margin-top: 3px;
   color: var(--text-soft);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
 }
 
 .quote-mobile-head strong {
-  font-size: 1.14rem;
+  font-size: 1.12rem;
 }
 
 .quote-mobile-badge {
   display: inline-flex;
   align-items: center;
-  min-height: 30px;
-  padding: 0 12px;
+  min-height: 28px;
+  padding: 0 10px;
   border-radius: 999px;
   background: rgba(44, 99, 211, 0.08);
-  font-size: 0.8rem;
+  font-size: 0.76rem;
   font-weight: 700;
 }
 
-.quote-mobile-main {
-  margin-top: 16px;
-  padding: 14px 16px;
-  border-radius: 16px;
+.quote-mobile-badge.up {
+  background: rgba(40, 213, 145, 0.1);
+}
+
+.quote-mobile-badge.down {
+  background: rgba(239, 110, 100, 0.1);
+}
+
+.quote-mobile-prices {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.quote-mobile-price {
+  padding: 12px;
+  border-radius: 14px;
   background: linear-gradient(180deg, rgba(244, 248, 255, 0.98), rgba(236, 243, 255, 0.94));
   border: 1px solid rgba(44, 99, 211, 0.08);
 }
 
-.quote-mobile-main small {
+.quote-mobile-price small {
   display: block;
   color: var(--text-soft);
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   letter-spacing: 0.04em;
 }
 
-.quote-mobile-main strong {
+.quote-mobile-price strong {
   display: block;
-  margin-top: 8px;
-  font-size: 1.48rem;
+  margin-top: 7px;
+  font-size: 1.04rem;
   line-height: 1.05;
 }
 
-.quote-mobile-meta {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 12px;
+.quote-mobile-move {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
 }
 
-.quote-mobile-mini {
-  padding: 12px 10px;
-  border-radius: 14px;
-  background: linear-gradient(180deg, rgba(246, 249, 255, 0.98), rgba(240, 245, 255, 0.94));
-  border: 1px solid rgba(44, 99, 211, 0.08);
-}
-
-.quote-mobile-mini small {
-  display: block;
+.quote-mobile-move span {
   color: var(--text-soft);
-  font-size: 0.76rem;
+  font-size: 0.74rem;
+  font-weight: 700;
 }
 
-.quote-mobile-mini strong {
-  display: block;
-  margin-top: 8px;
-  font-size: 0.96rem;
+.quote-mobile-move strong {
+  font-size: 0.92rem;
 }
 
 .video-flow {
@@ -2659,15 +3018,25 @@ watch(isMenuOpen, (value) => {
 }
 
 .trust-card {
-  padding: 20px;
+  position: relative;
+  overflow: hidden;
+  padding: 18px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 252, 255, 0.96));
-  border-top: 3px solid rgba(44, 99, 211, 0.18);
+  border-top: 0;
+}
+
+.trust-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(44, 99, 211, 0.26), rgba(217, 164, 65, 0.34));
 }
 
 .trust-top {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   gap: 12px;
 }
@@ -2688,9 +3057,9 @@ watch(isMenuOpen, (value) => {
 .trust-kicker {
   color: rgba(44, 99, 211, 0.7);
   font-family: "Space Grotesk", sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.66rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.16em;
 }
 
 .bottom-cta {
@@ -2739,13 +3108,13 @@ watch(isMenuOpen, (value) => {
 .site-footer {
   background: linear-gradient(180deg, #071632, #041022);
   color: #fff;
-  padding: 30px 0 22px;
+  padding: 26px 0 20px;
 }
 
 .footer-grid {
   display: grid;
   grid-template-columns: 1.2fr repeat(3, 0.8fr) 1fr;
-  gap: 22px;
+  gap: 18px;
 }
 
 .footer-brand-link {
@@ -2756,18 +3125,30 @@ watch(isMenuOpen, (value) => {
 .footer-subscribe {
   display: grid;
   align-content: start;
-  gap: 8px;
+  gap: 6px;
 }
 
 .footer-links h3,
 .footer-subscribe h3 {
-  margin: 0 0 8px;
-  font-size: 1rem;
+  margin: 0 0 6px;
+  font-size: 0.96rem;
 }
 
 .footer-links a {
   color: rgba(255, 255, 255, 0.72);
-  font-size: 0.94rem;
+  font-size: 0.9rem;
+  line-height: 1.38;
+}
+
+.footer-subscribe-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.footer-subscribe-row label {
+  display: block;
 }
 
 .footer-subscribe input {
@@ -2780,11 +3161,15 @@ watch(isMenuOpen, (value) => {
   color: #fff;
 }
 
+.footer-subscribe .primary-button {
+  min-width: 88px;
+}
+
 .footer-risk {
   display: grid;
   gap: 8px;
-  margin-top: 28px;
-  padding: 18px 20px;
+  margin-top: 22px;
+  padding: 16px 18px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.04);
@@ -2805,8 +3190,8 @@ watch(isMenuOpen, (value) => {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  margin-top: 24px;
-  padding-top: 22px;
+  margin-top: 18px;
+  padding-top: 18px;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -3011,61 +3396,71 @@ watch(isMenuOpen, (value) => {
   }
 
   .hero-layout {
-    gap: 16px;
+    gap: 14px;
   }
 
   .hero-copy h1 {
-    max-width: 320px;
-    font-size: clamp(2.14rem, 1.78rem + 1.7vw, 2.72rem);
-    line-height: 1.04;
+    max-width: 304px;
+    font-size: clamp(1.98rem, 1.7rem + 1.48vw, 2.5rem);
+    line-height: 1.03;
   }
 
   .hero-copy p {
-    max-width: 326px;
-    font-size: 0.94rem;
-    line-height: 1.68;
+    max-width: 312px;
+    font-size: 0.91rem;
+    line-height: 1.58;
   }
 
   .hero-cta {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 18px;
+    gap: 10px;
+    margin-top: 16px;
   }
 
   .primary-button,
   .ghost-button,
   .secondary-button {
-    min-height: 46px;
+    min-height: 44px;
     padding: 0 18px;
   }
 
   .hero-points {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px 12px;
-    margin-top: 14px;
-    font-size: 0.82rem;
+    gap: 8px 10px;
+    margin-top: 12px;
+    font-size: 0.78rem;
   }
 
   .device-cluster {
-    min-height: 224px;
+    min-height: 210px;
   }
 
   .phone-shell {
-    left: 6%;
-    bottom: 14px;
-    width: 66px;
+    left: 7%;
+    bottom: 10px;
+    width: 62px;
     padding: 6px;
   }
 
   .phone-screen {
-    min-height: 162px;
-    padding: 7px;
+    min-height: 154px;
+    padding: 6px;
+  }
+
+  .phone-strip {
+    margin-bottom: 5px;
+  }
+
+  .phone-strip span {
+    min-height: 16px;
+    padding: 0 5px;
+    font-size: 0.42rem;
   }
 
   .phone-head {
-    margin-bottom: 6px;
+    margin-bottom: 5px;
   }
 
   .phone-head strong {
@@ -3073,11 +3468,25 @@ watch(isMenuOpen, (value) => {
   }
 
   .phone-chart {
-    height: 88px;
+    height: 82px;
+  }
+
+  .phone-callout {
+    top: 7px;
+    right: 7px;
+    padding: 4px 5px;
+  }
+
+  .phone-callout small {
+    font-size: 0.4rem;
+  }
+
+  .phone-callout strong {
+    font-size: 0.48rem;
   }
 
   .phone-rows {
-    margin-top: 6px;
+    margin-top: 5px;
     gap: 4px;
   }
 
@@ -3085,141 +3494,217 @@ watch(isMenuOpen, (value) => {
     padding: 6px 4px;
   }
 
+  .phone-row-card small {
+    font-size: 0.42rem;
+  }
+
   .phone-row-card strong {
-    font-size: 0.48rem;
+    font-size: 0.44rem;
   }
 
   .terminal-shell {
-    top: 8px;
-    width: 88%;
-    padding: 8px;
+    top: 4px;
+    width: 86%;
+    padding: 7px;
   }
 
   .terminal-topbar {
-    margin-bottom: 8px;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .terminal-window-controls {
+    gap: 4px;
+  }
+
+  .terminal-window-controls span {
+    width: 6px;
+    height: 6px;
+  }
+
+  .terminal-nav {
+    gap: 4px;
+  }
+
+  .terminal-nav span {
+    min-height: 18px;
+    padding: 0 5px;
+    font-size: 0.44rem;
+  }
+
+  .terminal-nav span:last-child {
+    display: none;
+  }
+
+  .terminal-brand {
+    font-size: 0.44rem;
   }
 
   .terminal-layout {
-    grid-template-columns: minmax(0, 1fr) 94px;
-    gap: 8px;
+    grid-template-columns: minmax(0, 1fr) 92px;
+    gap: 6px;
   }
 
   .terminal-main {
-    padding: 8px;
+    padding: 7px;
   }
 
   .terminal-chart-head small {
-    font-size: 0.56rem;
+    font-size: 0.54rem;
   }
 
   .terminal-chart-head strong {
-    margin-top: 6px;
-    font-size: 0.9rem;
+    margin-top: 5px;
+    font-size: 0.84rem;
   }
 
   .terminal-chart-meta {
-    gap: 5px;
+    gap: 4px;
   }
 
   .terminal-chart-meta span {
-    min-height: 22px;
-    padding: 0 7px;
-    font-size: 0.58rem;
+    min-height: 20px;
+    padding: 0 6px;
+    font-size: 0.54rem;
   }
 
   .terminal-chart {
-    height: 96px;
+    height: 94px;
+    margin-top: 8px;
+  }
+
+  .terminal-chart-callout {
+    top: 8px;
+    right: 8px;
+    padding: 4px 6px;
+  }
+
+  .terminal-chart-callout small {
+    font-size: 0.38rem;
+  }
+
+  .terminal-chart-callout strong {
+    margin-top: 2px;
+    font-size: 0.48rem;
   }
 
   .terminal-axis {
-    right: 8px;
-    top: 10px;
-    bottom: 12px;
-    font-size: 0.5rem;
+    right: 6px;
+    top: 8px;
+    bottom: 36px;
+    font-size: 0.46rem;
+  }
+
+  .terminal-grid {
+    inset: 8px 8px 30px;
+    gap: 12px;
+  }
+
+  .terminal-bars {
+    inset: 26px 8px 34px auto;
+    gap: 4px;
+  }
+
+  .terminal-xaxis {
+    left: 8px;
+    right: 42px;
+    bottom: 24px;
+    font-size: 0.42rem;
   }
 
   .terminal-chart::after {
-    inset: 10px 12px auto auto;
-    width: 76px;
-    height: 44px;
+    inset: 8px 8px auto auto;
+    width: 60px;
+    height: 36px;
   }
 
   .terminal-statusbar {
     left: 8px;
-    right: 58px;
-    bottom: 8px;
+    right: 8px;
+    bottom: 6px;
     gap: 4px;
   }
 
   .status-chip {
-    min-width: 50px;
-    padding: 4px 6px;
-    border-radius: 9px;
+    min-width: 44px;
+    padding: 4px 5px;
+    border-radius: 8px;
   }
 
   .status-chip small {
-    font-size: 0.44rem;
+    font-size: 0.42rem;
   }
 
   .status-chip strong {
     margin-top: 2px;
-    font-size: 0.52rem;
+    font-size: 0.48rem;
   }
 
   .terminal-panels {
-    gap: 6px;
-    margin-top: 8px;
+    gap: 4px;
+    margin-top: 6px;
   }
 
   .terminal-panel {
-    min-height: 34px;
-    padding: 6px;
+    min-height: 32px;
+    padding: 5px;
   }
 
   .terminal-panel small {
-    font-size: 0.44rem;
+    font-size: 0.42rem;
   }
 
   .terminal-panel strong {
     margin-top: 3px;
-    font-size: 0.56rem;
+    font-size: 0.52rem;
   }
 
   .terminal-side {
-    padding: 8px;
+    padding: 7px;
   }
 
   .side-title {
-    font-size: 0.54rem;
+    font-size: 0.5rem;
+    margin-bottom: 4px;
+  }
+
+  .side-head {
+    gap: 4px;
+    margin: 0 0 2px;
+    padding-bottom: 4px;
+  }
+
+  .side-head span {
+    font-size: 0.42rem;
   }
 
   .side-row {
-    gap: 5px;
-    margin-top: 6px;
-    padding-bottom: 5px;
+    gap: 4px;
+    min-height: auto;
+    padding: 5px 0;
   }
 
   .side-pair {
-    font-size: 0.52rem;
+    font-size: 0.48rem;
   }
 
   .side-price,
   .side-delta {
-    font-size: 0.52rem;
+    font-size: 0.48rem;
   }
 
   .side-delta {
-    min-width: 32px;
+    min-width: 28px;
   }
 
   .side-actions {
-    gap: 5px;
-    margin-top: 8px;
+    gap: 4px;
+    margin-top: 6px;
   }
 
   .side-actions button {
-    height: 24px;
-    font-size: 0.62rem;
+    height: 22px;
+    font-size: 0.56rem;
   }
 
   .terminal-footer {
@@ -3228,28 +3713,29 @@ watch(isMenuOpen, (value) => {
   }
 
   .footer-chip {
-    padding: 6px;
+    padding: 5px;
   }
 
   .footer-chip small {
-    font-size: 0.48rem;
+    font-size: 0.44rem;
   }
 
   .footer-chip strong {
-    font-size: 0.64rem;
+    font-size: 0.58rem;
   }
 
   .stats-strip {
     grid-template-columns: repeat(2, 1fr);
-    margin-top: -24px;
-    padding: 9px;
-    border-radius: 18px;
+    margin-top: -14px;
+    padding: 8px;
+    border-radius: 16px;
+    box-shadow: 0 16px 28px rgba(7, 22, 50, 0.08);
   }
 
   .stat-item {
-    gap: 10px;
-    min-height: 76px;
-    padding: 10px 14px;
+    gap: 8px;
+    min-height: 68px;
+    padding: 9px 12px;
   }
 
   .stat-item + .stat-item {
@@ -3283,15 +3769,15 @@ watch(isMenuOpen, (value) => {
   .market-tabs {
     flex-wrap: nowrap;
     overflow: auto hidden;
-    gap: 10px;
-    padding-bottom: 6px;
+    gap: 8px;
+    padding-bottom: 8px;
     scroll-snap-type: x proximity;
   }
 
   .market-tabs button {
-    min-height: 42px;
-    padding: 0 18px;
-    font-size: 0.92rem;
+    min-height: 40px;
+    padding: 0 16px;
+    font-size: 0.88rem;
     scroll-snap-align: start;
   }
 
@@ -3303,37 +3789,37 @@ watch(isMenuOpen, (value) => {
 
   .market-grid {
     grid-auto-flow: column;
-    grid-auto-columns: 88%;
+    grid-auto-columns: 82%;
     grid-template-columns: unset;
     gap: 14px;
   }
 
   .market-card {
-    padding: 18px;
+    padding: 16px;
     scroll-snap-align: start;
   }
 
   .market-copy small {
-    font-size: 0.7rem;
+    font-size: 0.64rem;
   }
 
   .market-card strong {
-    font-size: 1.08rem;
+    font-size: 1.02rem;
   }
 
   .market-price {
-    font-size: 1.28rem;
-    color: var(--text);
+    font-size: 1.18rem;
   }
 
   .market-change {
-    min-height: 30px;
-    padding: 0 10px;
-    font-size: 0.82rem;
+    min-height: 28px;
+    padding: 0 9px;
+    font-size: 0.78rem;
   }
 
   .sparkline {
-    height: 44px;
+    height: 36px;
+    opacity: 0.58;
   }
 
   .platform-overview {
@@ -3362,7 +3848,7 @@ watch(isMenuOpen, (value) => {
   }
 
   .mockup-candles {
-    height: 90px;
+    height: 84px;
   }
 
   .advantage-grid {
@@ -3383,53 +3869,84 @@ watch(isMenuOpen, (value) => {
   }
 
   .download-card {
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .download-top {
+    flex-direction: column;
     gap: 10px;
-    padding: 18px;
+  }
+
+  .download-branding {
+    width: 100%;
   }
 
   .download-system {
-    min-height: 24px;
-    padding: 0 10px;
-    font-size: 0.72rem;
+    min-height: 22px;
+    padding: 0 9px;
+    font-size: 0.68rem;
   }
 
-  .download-copy p {
-    font-size: 0.92rem;
-    line-height: 1.65;
+  .download-kicker {
+    font-size: 0.56rem;
+  }
+
+  .download-headline h3 {
+    font-size: 1.02rem;
+  }
+
+  .download-desc {
+    font-size: 0.88rem;
+    line-height: 1.52;
   }
 
   .quote-mobile-list {
-    gap: 12px;
+    gap: 10px;
   }
 
   .quote-mobile-card {
-    padding: 18px;
+    padding: 15px;
   }
 
   .quote-mobile-head strong {
-    font-size: 1.16rem;
+    font-size: 1.08rem;
   }
 
-  .quote-mobile-main {
-    margin-top: 14px;
-    padding: 14px;
+  .quote-mobile-symbol small {
+    font-size: 0.68rem;
   }
 
-  .quote-mobile-main strong {
-    font-size: 1.34rem;
+  .quote-mobile-badge {
+    min-height: 26px;
+    padding: 0 8px;
+    font-size: 0.72rem;
   }
 
-  .quote-mobile-meta {
+  .quote-mobile-prices {
     gap: 8px;
-    margin-top: 14px;
+    margin-top: 12px;
   }
 
-  .quote-mobile-mini {
-    padding: 11px 10px;
+  .quote-mobile-price {
+    padding: 10px;
   }
 
-  .quote-mobile-mini strong {
-    font-size: 0.88rem;
+  .quote-mobile-price strong {
+    font-size: 1rem;
+  }
+
+  .quote-mobile-move {
+    margin-top: 8px;
+    padding-top: 8px;
+  }
+
+  .quote-mobile-move span {
+    font-size: 0.72rem;
+  }
+
+  .quote-mobile-move strong {
+    font-size: 0.86rem;
   }
 
   .video-flow {
@@ -3505,22 +4022,30 @@ watch(isMenuOpen, (value) => {
 
   .trust-grid {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
+  }
+
+  .trust-card {
+    padding: 16px;
   }
 
   .trust-card p {
-    font-size: 0.88rem;
-    line-height: 1.56;
+    font-size: 0.82rem;
+    line-height: 1.48;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 
   .trust-kicker {
-    font-size: 0.64rem;
+    font-size: 0.6rem;
     letter-spacing: 0.14em;
   }
 
   .trust-card h3 {
-    margin: 12px 0 6px;
-    font-size: 1rem;
+    margin: 10px 0 4px;
+    font-size: 0.94rem;
   }
 
   .bottom-cta {
@@ -3528,12 +4053,12 @@ watch(isMenuOpen, (value) => {
   }
 
   .bottom-cta-inner {
-    gap: 14px;
-    padding: 18px 0 8px;
+    gap: 12px;
+    padding: 16px 0 6px;
   }
 
   .bottom-cta-inner h2 {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
   }
 
   .bottom-cta-actions {
@@ -3543,12 +4068,12 @@ watch(isMenuOpen, (value) => {
   }
 
   .site-footer {
-    padding-top: 18px;
+    padding-top: 16px;
   }
 
   .footer-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 10px;
   }
 
   .footer-brand,
@@ -3558,14 +4083,14 @@ watch(isMenuOpen, (value) => {
 
   .footer-links h3,
   .footer-subscribe h3 {
-    margin-bottom: 3px;
-    font-size: 0.92rem;
+    margin-bottom: 2px;
+    font-size: 0.88rem;
   }
 
   .footer-subscribe p,
   .footer-brand p {
-    font-size: 0.84rem;
-    line-height: 1.48;
+    font-size: 0.8rem;
+    line-height: 1.42;
   }
 
   .footer-brand-link {
@@ -3574,37 +4099,50 @@ watch(isMenuOpen, (value) => {
 
   .footer-links,
   .footer-subscribe {
-    gap: 4px;
+    gap: 3px;
   }
 
   .footer-links a {
-    font-size: 0.88rem;
-    line-height: 1.4;
+    font-size: 0.84rem;
+    line-height: 1.34;
+  }
+
+  .footer-subscribe-row {
+    gap: 8px;
   }
 
   .footer-subscribe input {
-    min-height: 42px;
+    min-height: 40px;
+  }
+
+  .footer-subscribe .primary-button {
+    min-height: 40px;
+    padding: 0 14px;
   }
 
   .footer-risk {
-    margin-top: 14px;
-    padding: 14px;
+    margin-top: 12px;
+    padding: 12px;
+  }
+
+  .footer-risk strong {
+    font-size: 0.88rem;
   }
 
   .footer-risk p {
-    font-size: 0.82rem;
-    line-height: 1.56;
+    font-size: 0.78rem;
+    line-height: 1.48;
   }
 
   .footer-bottom {
-    margin-top: 12px;
-    padding-top: 14px;
-    gap: 8px;
+    margin-top: 10px;
+    padding-top: 12px;
+    gap: 6px;
   }
 
   .footer-bottom p,
   .footer-meta a {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
   }
 
   .footer-meta {
