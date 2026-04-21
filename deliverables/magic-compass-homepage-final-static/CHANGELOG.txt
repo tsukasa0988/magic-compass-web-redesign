@@ -1,0 +1,12 @@
+Magic Compass Homepage Final Static Delivery
+
+Included in this final warm-up delivery:
+- Finalized homepage static UI based on the refined Vue + Vite implementation
+- Desktop and mobile responsive homepage layout
+- Refined hero section with platform-style terminal presentation
+- Core stats strip, market cards, platform overview, downloads, quotes, video, trust, CTA, and footer
+- Relative-path production build for easier static packaging
+- Final screenshot outputs for desktop and mobile review
+- Packaged static preview with TXT instructions and one-click local preview script
+
+This delivery is intended as the final static warm-up project handoff, not a production deployment build.

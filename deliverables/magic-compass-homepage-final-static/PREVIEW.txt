@@ -1,0 +1,18 @@
+Preview Methods
+
+Method A: Direct Open
+1. Extract the zip package.
+2. Double-click index.html.
+3. This package uses relative paths, but local browser handling of module files can vary.
+4. In the current local validation environment, direct open is not the recommended method.
+
+Method B: One-Click Local Preview
+1. Extract the zip package.
+2. Double-click start-preview.bat.
+3. Your browser should open:
+   http://127.0.0.1:4173/
+4. Keep the preview window open while reviewing.
+5. Close the PowerShell window to stop the local preview server.
+
+Recommendation:
+- Use start-preview.bat as the primary preview method.
