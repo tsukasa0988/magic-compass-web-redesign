@@ -81,6 +81,12 @@ const heroFooterStats = [
   { label: "BTCUSD", value: "67821.3" },
 ];
 
+const heroStatusItems = [
+  { label: "Spread", value: "0.1 Pip" },
+  { label: "Latency", value: "11 ms" },
+  { label: "Session", value: "London" },
+];
+
 const heroPhoneStats = [
   { label: "BUY", value: "1.08540", tone: "up" },
   { label: "SELL", value: "1.08560", tone: "down" },
@@ -188,22 +194,22 @@ const trustItems = [
   {
     kicker: "REGULATION",
     title: "多重監管",
-    body: "以合規與牌照訊號建立品牌成熟度。",
+    body: "合規牌照建立品牌成熟度。",
   },
   {
     kicker: "FUNDS",
     title: "資金隔離",
-    body: "客戶資金隔離存放，資訊表達清楚直接。",
+    body: "客戶資金隔離存放。",
   },
   {
     kicker: "TRANSPARENCY",
     title: "透明交易",
-    body: "報價與成本呈現克制，不堆疊雜訊。",
+    body: "報價與成本呈現克制。",
   },
   {
     kicker: "SERVICE",
     title: "7x24 支持",
-    body: "全天候支援承接真實交易需求。",
+    body: "全天候支援真實交易需求。",
   },
 ];
 
@@ -312,7 +318,7 @@ watch(isMenuOpen, (value) => {
             <span class="eyebrow">MAGIC COMPASS GLOBAL MARKETS</span>
             <h1>全球市場，一站式交易體驗</h1>
             <p>
-              穩定執行、多元產品、快速開戶與專業支持。以品牌信任感為核心，
+              穩定執行、多元產品、快速開戶與專業支持，
               呈現成熟 CFD 平台應有的市場感與終端質感。
             </p>
             <div class="hero-cta">
@@ -320,10 +326,10 @@ watch(isMenuOpen, (value) => {
               <a class="ghost-button hero-secondary" href="#platform">了解更多</a>
             </div>
             <ul class="hero-points">
-              <li>資金安全保障</li>
-              <li>穩定快速執行</li>
-              <li>多元交易產品</li>
-              <li>專業客戶支持</li>
+              <li>資金安全</li>
+              <li>快速執行</li>
+              <li>多元產品</li>
+              <li>專業支持</li>
             </ul>
           </div>
 
@@ -366,6 +372,12 @@ watch(isMenuOpen, (value) => {
                           points="0,138 24,112 48,124 72,92 96,104 120,70 144,80 168,48 192,62 216,34 240,52 264,16 288,40 312,28 336,10 360,24 390,18 420,28"
                         />
                       </svg>
+                      <div class="terminal-statusbar">
+                        <div v-for="item in heroStatusItems" :key="item.label" class="status-chip">
+                          <small>{{ item.label }}</small>
+                          <strong>{{ item.value }}</strong>
+                        </div>
+                      </div>
                     </div>
                     <div class="terminal-panels">
                       <div class="terminal-panel">
@@ -464,11 +476,12 @@ watch(isMenuOpen, (value) => {
           <div class="market-grid">
             <article v-for="card in marketCards" :key="card.symbol" class="market-card">
               <div class="market-card-head">
-                <div>
+                <div class="market-copy">
+                  <small>現價</small>
                   <strong>{{ card.symbol }}</strong>
                   <span class="market-price">{{ card.price }}</span>
                 </div>
-                <span :class="card.trend">{{ card.change }}</span>
+                <span :class="['market-change', card.trend]">{{ card.change }}</span>
               </div>
               <svg
                 viewBox="0 0 160 48"
@@ -591,16 +604,16 @@ watch(isMenuOpen, (value) => {
               </div>
               <span :class="['quote-mobile-badge', row.changeClass]">{{ row.ratio }}</span>
             </div>
-            <div class="quote-mobile-strip">
-              <div class="quote-mobile-value">
-                <small>買入</small>
+            <div class="quote-mobile-main">
+              <small>賣出價</small>
+              <strong class="up">{{ row.ask }}</strong>
+            </div>
+            <div class="quote-mobile-meta">
+              <div class="quote-mobile-mini">
+                <small>買入價</small>
                 <strong class="down">{{ row.bid }}</strong>
               </div>
-              <div class="quote-mobile-value">
-                <small>賣出</small>
-                <strong class="up">{{ row.ask }}</strong>
-              </div>
-              <div class="quote-mobile-value">
+              <div class="quote-mobile-mini">
                 <small>漲跌</small>
                 <strong :class="row.changeClass">{{ row.change }}</strong>
               </div>
@@ -1168,7 +1181,7 @@ watch(isMenuOpen, (value) => {
   max-width: 520px;
   color: rgba(255, 255, 255, 0.8);
   font-size: 1rem;
-  line-height: 1.72;
+  line-height: 1.66;
 }
 
 .hero-cta {
@@ -1191,12 +1204,12 @@ watch(isMenuOpen, (value) => {
 .hero-points {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px 20px;
+  gap: 12px 18px;
   padding: 0;
-  margin: 24px 0 0;
+  margin: 22px 0 0;
   list-style: none;
   color: rgba(255, 255, 255, 0.86);
-  font-size: 0.94rem;
+  font-size: 0.9rem;
   font-weight: 600;
 }
 
@@ -1361,6 +1374,19 @@ watch(isMenuOpen, (value) => {
   background: linear-gradient(180deg, rgba(15, 40, 87, 0.95), rgba(8, 24, 52, 0.96));
 }
 
+.terminal-chart::after {
+  content: "";
+  position: absolute;
+  inset: 18px 22px auto auto;
+  width: 116px;
+  height: 64px;
+  border-radius: 14px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
 .terminal-axis {
   position: absolute;
   right: 14px;
@@ -1454,6 +1480,40 @@ watch(isMenuOpen, (value) => {
   filter: drop-shadow(0 0 12px rgba(40, 213, 145, 0.28));
 }
 
+.terminal-statusbar {
+  position: absolute;
+  left: 14px;
+  right: 92px;
+  bottom: 12px;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
+}
+
+.status-chip {
+  min-width: 88px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(3, 13, 34, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+.status-chip small {
+  display: block;
+  color: rgba(255, 255, 255, 0.46);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.status-chip strong {
+  display: block;
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.76rem;
+}
+
 .terminal-panels {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1500,6 +1560,13 @@ watch(isMenuOpen, (value) => {
   gap: 8px;
   align-items: center;
   margin-top: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.side-row:last-of-type {
+  border-bottom: 0;
+  padding-bottom: 0;
 }
 
 .side-pair {
@@ -1848,16 +1915,36 @@ watch(isMenuOpen, (value) => {
   margin-bottom: 10px;
 }
 
+.market-copy small {
+  display: block;
+  color: var(--text-soft);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
 .market-card strong {
   display: block;
-  font-size: 0.96rem;
+  margin-top: 5px;
+  font-size: 1rem;
 }
 
 .market-price {
   display: block;
   margin-top: 6px;
   color: var(--text-soft);
-  font-size: 1.05rem;
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+
+.market-change {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(44, 99, 211, 0.08);
+  font-size: 0.84rem;
   font-weight: 700;
 }
 
@@ -2322,27 +2409,49 @@ watch(isMenuOpen, (value) => {
   font-weight: 700;
 }
 
-.quote-mobile-strip {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+.quote-mobile-main {
   margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(244, 248, 255, 0.98), rgba(236, 243, 255, 0.94));
+  border: 1px solid rgba(44, 99, 211, 0.08);
 }
 
-.quote-mobile-value {
+.quote-mobile-main small {
+  display: block;
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.quote-mobile-main strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.48rem;
+  line-height: 1.05;
+}
+
+.quote-mobile-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.quote-mobile-mini {
   padding: 12px 10px;
   border-radius: 14px;
   background: linear-gradient(180deg, rgba(246, 249, 255, 0.98), rgba(240, 245, 255, 0.94));
   border: 1px solid rgba(44, 99, 211, 0.08);
 }
 
-.quote-mobile-value small {
+.quote-mobile-mini small {
   display: block;
   color: var(--text-soft);
   font-size: 0.76rem;
 }
 
-.quote-mobile-value strong {
+.quote-mobile-mini strong {
   display: block;
   margin-top: 8px;
   font-size: 0.96rem;
@@ -2658,6 +2767,7 @@ watch(isMenuOpen, (value) => {
 
 .footer-links a {
   color: rgba(255, 255, 255, 0.72);
+  font-size: 0.94rem;
 }
 
 .footer-subscribe input {
@@ -2897,30 +3007,30 @@ watch(isMenuOpen, (value) => {
   }
 
   .hero-section {
-    padding-bottom: 56px;
+    padding-bottom: 48px;
   }
 
   .hero-layout {
-    gap: 20px;
+    gap: 16px;
   }
 
   .hero-copy h1 {
-    max-width: 332px;
-    font-size: clamp(2.28rem, 1.82rem + 2vw, 2.92rem);
-    line-height: 1.06;
+    max-width: 320px;
+    font-size: clamp(2.14rem, 1.78rem + 1.7vw, 2.72rem);
+    line-height: 1.04;
   }
 
   .hero-copy p {
-    max-width: 338px;
-    font-size: 0.99rem;
-    line-height: 1.76;
+    max-width: 326px;
+    font-size: 0.94rem;
+    line-height: 1.68;
   }
 
   .hero-cta {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    margin-top: 22px;
+    margin-top: 18px;
   }
 
   .primary-button,
@@ -2933,56 +3043,56 @@ watch(isMenuOpen, (value) => {
   .hero-points {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px 14px;
-    margin-top: 16px;
-    font-size: 0.9rem;
+    gap: 10px 12px;
+    margin-top: 14px;
+    font-size: 0.82rem;
   }
 
   .device-cluster {
-    min-height: 258px;
+    min-height: 224px;
   }
 
   .phone-shell {
-    left: 4%;
-    bottom: 12px;
-    width: 78px;
-    padding: 7px;
+    left: 6%;
+    bottom: 14px;
+    width: 66px;
+    padding: 6px;
   }
 
   .phone-screen {
-    min-height: 194px;
-    padding: 8px;
+    min-height: 162px;
+    padding: 7px;
   }
 
   .phone-head {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .phone-head strong {
-    font-size: 0.7rem;
+    font-size: 0.6rem;
   }
 
   .phone-chart {
-    height: 108px;
+    height: 88px;
   }
 
   .phone-rows {
-    margin-top: 8px;
-    gap: 6px;
+    margin-top: 6px;
+    gap: 4px;
   }
 
   .phone-row-card {
-    padding: 7px 5px;
+    padding: 6px 4px;
   }
 
   .phone-row-card strong {
-    font-size: 0.58rem;
+    font-size: 0.48rem;
   }
 
   .terminal-shell {
-    top: 12px;
-    width: 92%;
-    padding: 10px;
+    top: 8px;
+    width: 88%;
+    padding: 8px;
   }
 
   .terminal-topbar {
@@ -3004,7 +3114,7 @@ watch(isMenuOpen, (value) => {
 
   .terminal-chart-head strong {
     margin-top: 6px;
-    font-size: 0.98rem;
+    font-size: 0.9rem;
   }
 
   .terminal-chart-meta {
@@ -3018,7 +3128,7 @@ watch(isMenuOpen, (value) => {
   }
 
   .terminal-chart {
-    height: 118px;
+    height: 96px;
   }
 
   .terminal-axis {
@@ -3026,6 +3136,34 @@ watch(isMenuOpen, (value) => {
     top: 10px;
     bottom: 12px;
     font-size: 0.5rem;
+  }
+
+  .terminal-chart::after {
+    inset: 10px 12px auto auto;
+    width: 76px;
+    height: 44px;
+  }
+
+  .terminal-statusbar {
+    left: 8px;
+    right: 58px;
+    bottom: 8px;
+    gap: 4px;
+  }
+
+  .status-chip {
+    min-width: 50px;
+    padding: 4px 6px;
+    border-radius: 9px;
+  }
+
+  .status-chip small {
+    font-size: 0.44rem;
+  }
+
+  .status-chip strong {
+    margin-top: 2px;
+    font-size: 0.52rem;
   }
 
   .terminal-panels {
@@ -3052,16 +3190,17 @@ watch(isMenuOpen, (value) => {
   }
 
   .side-title {
-    font-size: 0.58rem;
+    font-size: 0.54rem;
   }
 
   .side-row {
     gap: 5px;
-    margin-top: 8px;
+    margin-top: 6px;
+    padding-bottom: 5px;
   }
 
   .side-pair {
-    font-size: 0.56rem;
+    font-size: 0.52rem;
   }
 
   .side-price,
@@ -3074,36 +3213,36 @@ watch(isMenuOpen, (value) => {
   }
 
   .side-actions {
-    gap: 6px;
-    margin-top: 10px;
-  }
-
-  .side-actions button {
-    height: 28px;
-    font-size: 0.68rem;
-  }
-
-  .terminal-footer {
-    gap: 6px;
+    gap: 5px;
     margin-top: 8px;
   }
 
+  .side-actions button {
+    height: 24px;
+    font-size: 0.62rem;
+  }
+
+  .terminal-footer {
+    gap: 4px;
+    margin-top: 6px;
+  }
+
   .footer-chip {
-    padding: 8px;
+    padding: 6px;
   }
 
   .footer-chip small {
-    font-size: 0.56rem;
+    font-size: 0.48rem;
   }
 
   .footer-chip strong {
-    font-size: 0.74rem;
+    font-size: 0.64rem;
   }
 
   .stats-strip {
     grid-template-columns: repeat(2, 1fr);
-    margin-top: -28px;
-    padding: 10px;
+    margin-top: -24px;
+    padding: 9px;
     border-radius: 18px;
   }
 
@@ -3144,27 +3283,57 @@ watch(isMenuOpen, (value) => {
   .market-tabs {
     flex-wrap: nowrap;
     overflow: auto hidden;
-    padding-bottom: 4px;
+    gap: 10px;
+    padding-bottom: 6px;
+    scroll-snap-type: x proximity;
+  }
+
+  .market-tabs button {
+    min-height: 42px;
+    padding: 0 18px;
+    font-size: 0.92rem;
+    scroll-snap-align: start;
   }
 
   .market-grid-shell {
     overflow-x: auto;
     padding-bottom: 4px;
+    scroll-snap-type: x proximity;
   }
 
   .market-grid {
     grid-auto-flow: column;
-    grid-auto-columns: 84%;
+    grid-auto-columns: 88%;
     grid-template-columns: unset;
     gap: 14px;
   }
 
   .market-card {
-    padding: 16px;
+    padding: 18px;
+    scroll-snap-align: start;
+  }
+
+  .market-copy small {
+    font-size: 0.7rem;
+  }
+
+  .market-card strong {
+    font-size: 1.08rem;
   }
 
   .market-price {
-    font-size: 1.04rem;
+    font-size: 1.28rem;
+    color: var(--text);
+  }
+
+  .market-change {
+    min-height: 30px;
+    padding: 0 10px;
+    font-size: 0.82rem;
+  }
+
+  .sparkline {
+    height: 44px;
   }
 
   .platform-overview {
@@ -3230,28 +3399,37 @@ watch(isMenuOpen, (value) => {
   }
 
   .quote-mobile-list {
-    gap: 14px;
+    gap: 12px;
   }
 
   .quote-mobile-card {
-    padding: 20px;
+    padding: 18px;
   }
 
   .quote-mobile-head strong {
-    font-size: 1.2rem;
+    font-size: 1.16rem;
   }
 
-  .quote-mobile-strip {
+  .quote-mobile-main {
+    margin-top: 14px;
+    padding: 14px;
+  }
+
+  .quote-mobile-main strong {
+    font-size: 1.34rem;
+  }
+
+  .quote-mobile-meta {
     gap: 8px;
     margin-top: 14px;
   }
 
-  .quote-mobile-value {
-    padding: 12px 9px;
+  .quote-mobile-mini {
+    padding: 11px 10px;
   }
 
-  .quote-mobile-value strong {
-    font-size: 0.9rem;
+  .quote-mobile-mini strong {
+    font-size: 0.88rem;
   }
 
   .video-flow {
@@ -3331,21 +3509,31 @@ watch(isMenuOpen, (value) => {
   }
 
   .trust-card p {
-    font-size: 0.96rem;
-    line-height: 1.7;
+    font-size: 0.88rem;
+    line-height: 1.56;
+  }
+
+  .trust-kicker {
+    font-size: 0.64rem;
+    letter-spacing: 0.14em;
+  }
+
+  .trust-card h3 {
+    margin: 12px 0 6px;
+    font-size: 1rem;
   }
 
   .bottom-cta {
-    padding: 18px 0 0;
+    padding: 14px 0 0;
   }
 
   .bottom-cta-inner {
-    gap: 18px;
-    padding: 20px 0 10px;
+    gap: 14px;
+    padding: 18px 0 8px;
   }
 
   .bottom-cta-inner h2 {
-    font-size: 1.92rem;
+    font-size: 1.8rem;
   }
 
   .bottom-cta-actions {
@@ -3355,12 +3543,12 @@ watch(isMenuOpen, (value) => {
   }
 
   .site-footer {
-    padding-top: 24px;
+    padding-top: 18px;
   }
 
   .footer-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
+    gap: 12px;
   }
 
   .footer-brand,
@@ -3370,29 +3558,56 @@ watch(isMenuOpen, (value) => {
 
   .footer-links h3,
   .footer-subscribe h3 {
-    margin-bottom: 6px;
-    font-size: 0.96rem;
+    margin-bottom: 3px;
+    font-size: 0.92rem;
   }
 
   .footer-subscribe p,
   .footer-brand p {
-    font-size: 0.9rem;
-    line-height: 1.6;
+    font-size: 0.84rem;
+    line-height: 1.48;
+  }
+
+  .footer-brand-link {
+    margin-bottom: 10px;
+  }
+
+  .footer-links,
+  .footer-subscribe {
+    gap: 4px;
+  }
+
+  .footer-links a {
+    font-size: 0.88rem;
+    line-height: 1.4;
+  }
+
+  .footer-subscribe input {
+    min-height: 42px;
   }
 
   .footer-risk {
-    margin-top: 18px;
-    padding: 16px;
+    margin-top: 14px;
+    padding: 14px;
   }
 
   .footer-risk p {
-    font-size: 0.88rem;
-    line-height: 1.65;
+    font-size: 0.82rem;
+    line-height: 1.56;
   }
 
   .footer-bottom {
-    margin-top: 16px;
-    padding-top: 16px;
+    margin-top: 12px;
+    padding-top: 14px;
+    gap: 8px;
+  }
+
+  .footer-bottom p,
+  .footer-meta a {
+    font-size: 0.8rem;
+  }
+
+  .footer-meta {
     gap: 10px;
   }
 }
