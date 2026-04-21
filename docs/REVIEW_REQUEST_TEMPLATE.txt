@@ -1,0 +1,51 @@
+Review Request Template
+
+Project:
+Stage:
+Version:
+
+1. Current Goal
+
+- What this version is trying to improve:
+
+2. Scope Locked
+
+- Module order stays fixed:
+- Pages in scope:
+- Items intentionally not handled:
+
+3. What Changed This Round
+
+- Change 1:
+- Change 2:
+- Change 3:
+
+4. Priority Review Questions
+
+- Q1:
+- Q2:
+- Q3:
+
+5. Review Output Format Required
+
+- Highest priority issues first
+- Separate PC and WAP comments
+- Mark which items are:
+  - must fix now
+  - can defer
+  - need user decision
+- Do not rewrite the whole project direction
+- Do not change locked module order unless explicitly justified
+
+6. Attached or Referenced Assets
+
+- Desktop preview:
+- Mobile viewport screenshot:
+- Mobile full-page screenshot:
+- Other reference files:
+
+7. Constraints for Reviewer
+
+- Keep current brand direction
+- Focus on refinement, compression, and polish
+- Avoid restart-level suggestions unless critical

@@ -1,0 +1,84 @@
+Magic Compass Collaboration Rules
+Version: v1
+
+1. Task Start Rules
+
+- Every new stage must start with one TASK_BRIEF.txt.
+- No large implementation starts without a brief.
+- The brief must state:
+  - stage goal
+  - in-scope items
+  - out-of-scope items
+  - must-keep structure
+  - acceptance criteria
+- Only one active brief is valid at a time.
+
+2. Scope Control Rules
+
+- Codex may optimize within the approved page and module range.
+- Codex may not expand to new pages, new features, or new stack choices without approval.
+- If a change affects brand direction, compliance wording, or module order, user approval is required first.
+- Small layout, spacing, hierarchy, and responsive refinements may be handled autonomously.
+
+3. External Help / Research Rules
+
+- Engineering problems should be solved by Codex first.
+- Design judgment, copywriting gaps, and review requests may be sent to GPT.
+- Every external request must ask one clear question with explicit constraints.
+- External suggestions are advisory only; they do not override the current brief.
+- Codex must summarize external suggestions into:
+  - adopted
+  - not adopted
+  - needs user decision
+
+4. Preview and Screenshot Rules
+
+- Screenshots must come from a local preview server, not file://.
+- Each review milestone must include:
+  - desktop preview
+  - mobile viewport screenshot
+  - mobile full-page screenshot
+- Mobile screenshots must use a fixed mobile viewport.
+- Final delivery should provide two preview methods:
+  - double-click static preview package if feasible
+  - one-click local preview command or script
+- Preview usage instructions should be written in TXT.
+
+5. Reporting Rules
+
+- Every implementation round should report:
+  - changed files
+  - build status
+  - preview asset paths
+  - unresolved risks
+  - next recommended action
+- If GPT review is needed, include a ready-to-send review request file.
+- Reports should focus on what changed and what needs decision, not full process logs.
+
+6. Delivery Packaging Rules
+
+- Each milestone should have one delivery folder under deliverables if needed.
+- Suggested contents:
+  - preview images
+  - static preview package
+  - PREVIEW.txt
+  - CHANGELOG.txt
+  - REVIEW_REQUEST.txt
+- Runtime and usage instructions should use TXT by default.
+
+7. Change Gate Rules
+
+- User approval is required before:
+  - brand repositioning
+  - module order change
+  - compliance-sensitive copy changes
+  - stack migration
+  - publishing or connecting external production services
+- If a request conflicts with the active brief, Codex should stop and surface the conflict.
+
+8. Long-Term Efficiency Rules
+
+- GPT should write delta instructions, not rewrite the whole project every round.
+- Codex should maintain continuity and avoid restarting from zero.
+- Only milestone decisions should be archived permanently.
+- Intermediate experiments and low-value micro-iterations do not need full documentation.

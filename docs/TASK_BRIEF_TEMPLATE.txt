@@ -1,0 +1,72 @@
+Task Brief Template
+
+Project Name:
+Stage Name:
+Version:
+Date:
+
+1. Stage Goal
+
+- What this stage is trying to achieve:
+
+2. In Scope
+
+- Pages:
+- Modules:
+- Assets to use:
+- Technical work allowed:
+
+3. Out of Scope
+
+- Pages not to touch:
+- Features not to build:
+- Back-end / API work excluded:
+- Design directions not allowed:
+
+4. Must Keep
+
+- Module order:
+- Brand direction:
+- Tone / copy constraints:
+- Existing components or references that must remain:
+
+5. Must Remove or Avoid
+
+- Items to delete:
+- Items to simplify:
+- Patterns to avoid:
+
+6. Inputs Received
+
+- Visual references:
+- Copy references:
+- Repo / branch:
+- Existing screenshots:
+
+7. Technical Rules
+
+- Front-end stack:
+- Build command:
+- Preview command:
+- Screenshot rules:
+- Delivery format:
+
+8. Acceptance Criteria
+
+- Build passes:
+- Preview works:
+- Required screenshots delivered:
+- Static package delivered if required:
+- Review request prepared:
+
+9. Deliverables
+
+- Files expected:
+- Screenshot outputs:
+- Review document:
+- GitHub sync required: Yes / No
+
+10. Open Risks or Decision Points
+
+- Items that still need user approval:
+- Items that may require GPT review:
